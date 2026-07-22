@@ -1,0 +1,50 @@
+name: Build Iris
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - name: Make Gradle executable
+        run: chmod +x gradlew
+
+      - name: Build
+        run: ./gradlew build
+
+      - name: Find plugin jar
+        run: |
+          mkdir artifact
+          find . -type f \
+            -path "*/build/libs/*.jar" \
+            ! -name "*sources*" \
+            ! -name "*javadoc*" \
+            ! -name "*shadow*" \
+            ! -name "*dev*" \
+            -exec cp {} artifact/ \;
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Iris
+          path: artifact/*.jar
