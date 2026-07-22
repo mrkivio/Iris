@@ -129,6 +129,9 @@ kotlin {
     }
 }
 
+val sentryToken = findProperty("sentry.auth.token") as String?
+    ?: System.getenv("SENTRY_AUTH_TOKEN")
+
 sentry {
     url = "http://sentry.volmit.com:8080"
     autoInstallation.enabled = false
@@ -136,7 +139,9 @@ sentry {
 
     org = "sentry"
     projectName = "iris"
-    authToken = findProperty("sentry.auth.token") as String? ?: System.getenv("SENTRY_AUTH_TOKEN")
+    authToken = sentryToken
+
+    enabled = !sentryToken.isNullOrBlank()
 }
 
 slimJar {
