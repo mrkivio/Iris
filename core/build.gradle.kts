@@ -129,20 +129,13 @@ kotlin {
     }
 }
 
-val sentryToken = findProperty("sentry.auth.token") as String?
-    ?: System.getenv("SENTRY_AUTH_TOKEN")
-
 sentry {
-    url = "http://sentry.volmit.com:8080"
-    autoInstallation.enabled = false
-    includeSourceContext = true
-
-    org = "sentry"
-    projectName = "iris"
-    authToken = sentryToken
-
-    enabled = !sentryToken.isNullOrBlank()
-}
+url = "http://sentry.volmit.com:8080"
+autoInstallation.enabled = false
+includeSourceContext = true
+org = "sentry"
+projectName = "iris"
+authToken = findProperty("sentry.auth.token") as String? ?: System.getenv("SENTRY_AUTH_TOKEN") }
 
 slimJar {
     mirrors = listOf(Mirror(
