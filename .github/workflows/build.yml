@@ -30,7 +30,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build
-        run: ./gradlew build
+  run: ./gradlew build -x sentryBundleSourcesJava -x sentryCollectSourcesJava -x generateSentryBundleIdJava -x generateSentryDebugMetaPropertiesjava
 
       - name: Find plugin jar
         run: |
