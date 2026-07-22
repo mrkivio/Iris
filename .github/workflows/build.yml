@@ -29,8 +29,8 @@ jobs:
       - name: Make Gradle executable
         run: chmod +x gradlew
         
-      - name: Build
-        run: ./gradlew build
+      - name: Build plugin
+        run: ./gradlew :core:shadowJar
 
       - name: Find plugin jar
         run: |
