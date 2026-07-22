@@ -28,9 +28,9 @@ jobs:
 
       - name: Make Gradle executable
         run: chmod +x gradlew
-
+        
       - name: Build
-  run: ./gradlew build -x sentryBundleSourcesJava -x sentryCollectSourcesJava -x generateSentryBundleIdJava -x generateSentryDebugMetaPropertiesjava
+        run: ./gradlew build
 
       - name: Find plugin jar
         run: |
